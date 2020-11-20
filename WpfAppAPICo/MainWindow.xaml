@@ -4,9 +4,73 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfAppAPICo"
+        xmlns:logVM="clr-namespace:WpfAppAPICo.ViewModels"
+        xmlns:h="clr-namespace:WpfAppAPICo.Helper"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <logVM:LoginViewModel x:Key="loginVM"/>
+    </Window.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="282*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="67*"/>
+            <ColumnDefinition Width="215*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         
+        <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
+                   Margin="0,0,66.25,20" HorizontalAlignment="Center" FontSize="48" FontFamily="Segoe UI Light">
+            Login Form
+        </TextBlock>
+
+        <TextBlock x:Name="txtBlockErrorMessage" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" 
+                   Foreground="Red" TextWrapping="Wrap" Width="280" Margin="0 0 0 20" Text="{Binding ErrorMessage, Source={StaticResource loginVM}, Mode=TwoWay}">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        
+        <!-- Username row-->
+        <TextBlock Grid.Row="2" Grid.Column="1" Margin="0 0 0 20">
+            Username:
+        </TextBlock>
+        <TextBox x:Name="Username" Grid.Row="2" Grid.Column="2" MinWidth="100" Margin="0 0 0 20" 
+                 Text="{Binding Username, Source={StaticResource loginVM}, Mode=TwoWay}"/>
+
+        <!-- Pasword row-->
+        <TextBlock Grid.Row="3" Grid.Column="1" Margin="0 0 0 20">
+            Password:
+        </TextBlock>
+        <PasswordBox x:Name="Password"
+                     h:PasswordHelper.Attach="True" 
+                     h:PasswordHelper.Password="{Binding Password, Source={StaticResource loginVM}, Mode=TwoWay}" 
+                     Grid.Row="3" Grid.Column="2" MinWidth="100" Margin="0 0 0 20"/>
+
+        <!--Login row -->
+        <Button Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Padding="20 5"
+                HorizontalAlignment="Center" x:Name="LogIn" Margin="76,0" CommandParameter="{Binding ElementName=Username}" Command="{Binding LogInCommand, Source={StaticResource loginVM}}">
+            Log In
+        </Button>
     </Grid>
 </Window>

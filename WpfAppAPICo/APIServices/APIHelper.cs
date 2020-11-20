@@ -48,11 +48,11 @@ namespace WpfAppAPICo.APIServices
                 new KeyValuePair<string, string>("password", password)
             });
             
-            using (HttpResponseMessage response = await httpClient.PostAsync("/Token", content))
+            using (HttpResponseMessage response = await httpClient.PostAsync("/token", content))
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    var token = await response.Content.ReadAsAsync<Token>();
+                    Token token = await response.Content.ReadAsAsync<Token>();
 
                     return token;
                 }

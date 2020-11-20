@@ -8,7 +8,7 @@ namespace WpfAppAPICo.Models
 {
     public class Token
     {
-        public string token { get; set; }
-        public int username { get; set; }
+        public string access_token { get; set; }
+        public string userName { get; set; }
     }
 }
