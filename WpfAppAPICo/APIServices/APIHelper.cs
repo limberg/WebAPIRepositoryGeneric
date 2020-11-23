@@ -10,7 +10,7 @@ using WpfAppAPICo.Models;
 
 namespace WpfAppAPICo.APIServices
 {
-    public class APIHelper
+    public class APIHelper : IAPIHelper
     {
         private HttpClient httpClient;
 
@@ -25,7 +25,7 @@ namespace WpfAppAPICo.APIServices
 
         public async Task<List<Employee>> GetAllEmployees()
         {
-            using(HttpResponseMessage response = await httpClient.GetAsync("/api/GetAll"))
+            using (HttpResponseMessage response = await httpClient.GetAsync("/api/GetAll"))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -47,7 +47,7 @@ namespace WpfAppAPICo.APIServices
                 new KeyValuePair<string, string>("username", username),
                 new KeyValuePair<string, string>("password", password)
             });
-            
+
             using (HttpResponseMessage response = await httpClient.PostAsync("/token", content))
             {
                 if (response.IsSuccessStatusCode)

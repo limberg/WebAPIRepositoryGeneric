@@ -13,5 +13,9 @@ namespace WpfAppAPICo
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            StartupUri = new Uri("Views/EmployeeList.xaml", UriKind.Relative);
+        }
     }
 }
