@@ -41,7 +41,7 @@ namespace WebApi_UnityOfWork.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetEmployeebyID/{Id}", Name ="GetEmployeeByID")]
+        [Route("api/GetEmployeeByID/{Id}", Name ="GetEmployeeByID")]
         public IHttpActionResult GetEmployeeById(int id)
         {
             var employee = _unitOfWork.Employees.Get(id);

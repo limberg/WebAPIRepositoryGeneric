@@ -30,6 +30,8 @@ namespace WpfAppAPICo.Views
 
             DataContext = this;
 
+            txtMessage.Foreground = Brushes.Red;
+
         }
     }
 }

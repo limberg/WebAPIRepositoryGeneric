@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfAppAPICo.Models
+namespace WpfAppAPICo.ViewModels
 {
     public class ObservableObject : INotifyPropertyChanged
     {

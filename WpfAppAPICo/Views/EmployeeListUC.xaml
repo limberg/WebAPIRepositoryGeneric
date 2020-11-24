@@ -7,12 +7,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <Grid>
-        <ListView x:Name="lvEmployees" Margin="50"  ItemsSource="{Binding Employees}" SelectionMode="Multiple" SelectionChanged="ListView_SelectionChanged">
+        <ListView x:Name="lvEmployees" Margin="10"  ItemsSource="{Binding Employees}" SelectionMode="Multiple" SelectionChanged="ListView_SelectionChanged">
             <ListView.View>
                 <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding EmployeeID}"/>
                     <GridViewColumn Header="Vorname" DisplayMemberBinding="{Binding FirstName}"/>
                     <GridViewColumn Header="Nachname" DisplayMemberBinding="{Binding LastName}"/>
-                    <GridViewColumn Header="Addresse" DisplayMemberBinding="{Binding Addresse}"/>
+                    <GridViewColumn Header="Adresse" DisplayMemberBinding="{Binding Address}"/>
                 </GridView>
             </ListView.View>
         </ListView>

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using System.Net.Http.Headers;
 using WpfAppAPICo.Models;
+using Newtonsoft.Json;
 
 namespace WpfAppAPICo.APIServices
 {
@@ -36,6 +37,28 @@ namespace WpfAppAPICo.APIServices
                 else
                     throw new Exception(response.ReasonPhrase);
 
+            }
+        }
+
+
+        public async Task<Employee> AddEmployee(Employee employeeDTO)
+        {
+
+            var json = JsonConvert.SerializeObject(employeeDTO);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+                
+            using(HttpResponseMessage response = await httpClient.PostAsync("/api/AddEmployee/",data))
+            {
+                if(response.IsSuccessStatusCode)
+                {
+                    var employee = await response.Content.ReadAsAsync<Employee>();
+
+                    return employee;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
             }
         }
 

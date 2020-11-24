@@ -75,9 +75,10 @@
     <Compile Include="Command\AsyncCommandBase.cs" />
     <Compile Include="Command\LoadEmployeesCommand.cs" />
     <Compile Include="Command\LogInRelayCommand.cs" />
+    <Compile Include="Command\RelayCommand.cs" />
     <Compile Include="Command\SelectedEmployeeCommand.cs" />
     <Compile Include="Helper\PasswordHelper.cs" />
-    <Compile Include="Models\ObservableObject.cs" />
+    <Compile Include="ViewModels\ObservableObject.cs" />
     <Compile Include="ViewModels\EmployeeListViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Views\EmployeeList.xaml.cs">

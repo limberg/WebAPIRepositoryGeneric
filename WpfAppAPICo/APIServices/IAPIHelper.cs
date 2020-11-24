@@ -8,5 +8,7 @@ namespace WpfAppAPICo.APIServices
     {
         Task<Token> Authentication(string username, string password);
         Task<List<Employee>> GetAllEmployees();
+
+        Task<Employee> AddEmployee(Employee employeeDTO);
     }
 }
