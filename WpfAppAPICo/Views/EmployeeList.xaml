@@ -29,18 +29,29 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Margin="10" Padding="5" Grid.Row="0" Grid.Column="0" > Vorname:</TextBlock>
-                <TextBox Text="{Binding CurrentEmployee.FirstName, Mode=TwoWay}"  Margin="10" Padding="5" Grid.Row="0" Grid.Column="1"></TextBox>
+                <TextBlock Margin="10" Padding="5" Grid.Row="0" Grid.Column="0" > ID:</TextBlock>
+                <TextBox Text="{Binding CurrentEmployee.EmployeeID, Mode=TwoWay}" 
+                         Margin="10" Padding="5" Grid.Row="0" Grid.Column="1"></TextBox>
 
-                <TextBlock Margin="10" Padding="5" Grid.Row="1" Grid.Column="0" > Nachname:</TextBlock>
-                <TextBox Text="{Binding CurrentEmployee.LastName, Mode=TwoWay}" Margin="10" Padding="5" Grid.Row="1" Grid.Column="1"></TextBox>
+                <TextBlock Margin="10" Padding="5" Grid.Row="1" Grid.Column="0" > Vorname:</TextBlock>
+                <TextBox x:Name="txtFirstName" Text="{Binding CurrentEmployee.FirstName, Mode=TwoWay}"  
+                         Margin="10" Padding="5" Grid.Row="1" Grid.Column="1"></TextBox>
 
-                <TextBlock Margin="10" Padding="5" Grid.Row="2" Grid.Column="0" > Adresse:</TextBlock>
-                <TextBox Text="{Binding CurrentEmployee.Address, Mode=TwoWay}" Margin="10" Padding="5" Grid.Row="2" Grid.Column="1"></TextBox>
+                <TextBlock Margin="10" Padding="5" Grid.Row="2" Grid.Column="0" > Nachname:</TextBlock>
+                <TextBox Text="{Binding CurrentEmployee.LastName, Mode=TwoWay}" 
+                         Margin="10" Padding="5" Grid.Row="2" Grid.Column="1"></TextBox>
+                <!--<TextBox Text="{Binding ElementName=txtFirstName, Path=Text, UpdateSourceTrigger=PropertyChanged}" 
+                         Margin="10" Padding="5" Grid.Row="2" Grid.Column="1"></TextBox>-->
 
-                <StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal" Grid.ColumnSpan="2">
+
+                <TextBlock Margin="10" Padding="5" Grid.Row="3" Grid.Column="0" > Adresse:</TextBlock>
+                <TextBox Text="{Binding CurrentEmployee.Address, Mode=TwoWay}" 
+                         Margin="10" Padding="5" Grid.Row="3" Grid.Column="1"></TextBox>
+
+                <StackPanel Grid.Row="4" HorizontalAlignment="Center" Orientation="Horizontal" Grid.ColumnSpan="2">
                     <StackPanel.Resources>
                         <Style x:Key="ButtonStyle">
                             <Setter Property="Button.Background" Value="#00A8C6"/>
@@ -49,10 +60,10 @@
                             <Setter Property="Button.Width" Value="100"/>
                         </Style>
                     </StackPanel.Resources>
-                    <Button Style="{StaticResource ButtonStyle}" Command="{Binding RelayAddCommand, Mode=TwoWay}" >Addieren</Button>
-                    <Button Style="{StaticResource ButtonStyle}">Suchen</Button>
-                    <Button Style="{StaticResource ButtonStyle}">Aktualisieren</Button>
-                    <Button Style="{StaticResource ButtonStyle}">Löschen</Button>
+                    <Button Style="{StaticResource ButtonStyle}" Command="{Binding RelayAddCommand, Mode=TwoWay}" Content="_Addieren" ></Button>
+                    <Button Style="{StaticResource ButtonStyle}" Command="{Binding RelaySearchCommand, Mode=TwoWay}">Suchen</Button>
+                    <Button Style="{StaticResource ButtonStyle}" Command="{Binding RelayUpdateCommand, Mode=TwoWay}">Aktualisieren</Button>
+                    <Button Style="{StaticResource ButtonStyle}" Command="{Binding RelayDeleteCommand, Mode=TwoWay}">Löschen</Button>
                 </StackPanel>
 
                 <TextBlock Text="{Binding Message, Mode=TwoWay}" x:Name="txtMessage" 

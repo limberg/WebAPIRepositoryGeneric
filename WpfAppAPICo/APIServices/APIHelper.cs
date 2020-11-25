@@ -40,10 +40,25 @@ namespace WpfAppAPICo.APIServices
             }
         }
 
+        public async Task<Employee> GetEmployeeById(int id)
+        {
+            using (HttpResponseMessage response = await httpClient.GetAsync($"api/GetEmployeeByID/{id}"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var employee = await response.Content.ReadAsAsync<Employee>();
+
+                    return employee;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
 
         public async Task<Employee> AddEmployee(Employee employeeDTO)
         {
-
             var json = JsonConvert.SerializeObject(employeeDTO);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
                 
@@ -54,6 +69,44 @@ namespace WpfAppAPICo.APIServices
                     var employee = await response.Content.ReadAsAsync<Employee>();
 
                     return employee;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task<bool> UpdateEmployee(int id, Employee EmployeeDTO)
+        {
+            var json = JsonConvert.SerializeObject(EmployeeDTO);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            using (HttpResponseMessage response = await httpClient.PutAsync($"api/UpdateEmployee/{id}", data))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    //var employee = await response.Content.ReadAsAsync<Employee>();
+                    return true;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task<bool> DeleteEmployee(int id)
+        {
+            
+            using (HttpResponseMessage response = await httpClient.DeleteAsync($"api/DeleteEmployee/{id}"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                        return true;
+                    else
+                        return false;
                 }
                 else
                 {

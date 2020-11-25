@@ -17,7 +17,7 @@ namespace WpfAppAPICo.ViewModels
     public class EmployeeListViewModel : ObservableObject
     {
         private ObservableCollection<Employee> _employees;
-        private ICommand relayAddCommand;
+        
 
         private readonly IAPIHelper apiHelper;
 
@@ -35,8 +35,6 @@ namespace WpfAppAPICo.ViewModels
 
         public ICommand SelectedEmployeeCommand { get; set; }
 
-        public ICommand RelayAddCommand { get => relayAddCommand; set => relayAddCommand = value; }
-
         private Employee _currentEmployee;
 
         public Employee CurrentEmployee
@@ -47,6 +45,7 @@ namespace WpfAppAPICo.ViewModels
             }
         }
 
+        #region Message
         private string  _message;
         public string  Message
         {
@@ -65,7 +64,6 @@ namespace WpfAppAPICo.ViewModels
             }
         }
 
-
         private Visibility _display;
         public Visibility Display
         {
@@ -75,6 +73,11 @@ namespace WpfAppAPICo.ViewModels
             }
         }
 
+        #endregion
+
+        #region Add
+        private ICommand relayAddCommand;
+        public ICommand RelayAddCommand { get => relayAddCommand; set => relayAddCommand = value; }
         private async void Add()
         {
             try
@@ -83,7 +86,7 @@ namespace WpfAppAPICo.ViewModels
 
                 CurrentEmployee = new Employee();
 
-                this.Employees.Clear();
+                //this.Employees.Clear();
                 LoadEmployeesCommand.Execute(null);
 
                 MessageBrush = Brushes.Blue;
@@ -100,7 +103,119 @@ namespace WpfAppAPICo.ViewModels
             }
         }
 
-        
+        #endregion
+
+        #region Search
+
+        private ICommand _relaySearchcommand;
+
+        public ICommand RelaySearchCommand
+        {
+            get { return _relaySearchcommand; }
+            set { _relaySearchcommand = value; }
+        }
+
+        private async void Search()
+        {
+            try
+            {
+                Employee employee = await apiHelper.GetEmployeeById(CurrentEmployee.EmployeeID);
+
+                CurrentEmployee = employee;
+
+            }
+            catch (Exception ex)
+            {
+                Display = Visibility.Visible;
+                MessageBrush = Brushes.Red;
+                Message = $"{ex.Message}";
+
+            }
+        }
+
+        #endregion
+
+        #region Update
+
+        private ICommand _relayUpdateCommand;
+
+        public ICommand RelayUpdateCommand
+        {
+            get { return _relayUpdateCommand; }
+            set { _relayUpdateCommand = value; }
+        }
+
+        private async void Update()
+        {
+            try
+            {
+                var IsUpdate  =await apiHelper.UpdateEmployee(CurrentEmployee.EmployeeID, CurrentEmployee);
+
+                //_employees.Clear();
+                if (IsUpdate)
+                {
+                    LoadEmployeesCommand.Execute(null);
+
+                    Display = Visibility.Visible;
+                    MessageBrush = Brushes.Blue;
+                    Message = $"Der Angestellte {CurrentEmployee.EmployeeID} wurde aktualisiert!";
+                }
+            }
+            catch (Exception ex)
+            {
+                Display = Visibility.Visible;
+                MessageBrush = Brushes.Red;
+                Message = $"{ex.Message}";
+
+            }
+        }
+
+
+        #endregion
+
+        #region DeleteEmployee
+
+        private ICommand _relayDeleteCommand;
+
+        public ICommand RelayDeleteCommand
+        {
+            get { return _relayDeleteCommand; }
+            set { _relayDeleteCommand = value; }
+        }
+
+        private async void Delete()
+        {
+            try
+            {
+
+                int id = CurrentEmployee.EmployeeID;
+                var IsDelete = await apiHelper.DeleteEmployee(CurrentEmployee.EmployeeID);
+
+                //_employees.Clear();
+                if (IsDelete)
+                {
+
+                    CurrentEmployee = new Employee();
+
+                    LoadEmployeesCommand.Execute(null);
+                   
+
+                    Display = Visibility.Visible;
+                    MessageBrush = Brushes.Blue;
+                    Message = $"Der Angestellte {id} wurde gelöscht!";
+                }
+            }
+            catch (Exception ex)
+            {
+                Display = Visibility.Visible;
+                MessageBrush = Brushes.Red;
+                Message = $"{ex.Message}";
+
+            }
+        }
+
+
+        #endregion
 
         public EmployeeListViewModel()
         {
@@ -108,7 +223,11 @@ namespace WpfAppAPICo.ViewModels
             LoadEmployeesCommand = new LoadEmployeesCommand(this, apiHelper);
             //SelectedEmployeeCommand = new SelectedEmployeeCommand();
             RelayAddCommand = new RelayCommand(Add);
+            RelaySearchCommand = new RelayCommand(Search);
+            RelayUpdateCommand = new RelayCommand(Update);
+            RelayDeleteCommand = new RelayCommand(Delete);
 
+            Message = "";
             Display = Visibility.Collapsed;
             CurrentEmployee = new Employee();
         }

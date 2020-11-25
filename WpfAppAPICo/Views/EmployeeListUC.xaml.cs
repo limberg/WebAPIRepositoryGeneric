@@ -53,15 +53,23 @@ namespace WpfAppAPICo.Views
         {
             InitializeComponent();
 
-            //DataContext = new EmployeeListViewModel();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if(LoadCommand != null)
+            try
             {
-                LoadCommand.Execute(null);
+                if (LoadCommand != null)
+                {
+                    LoadCommand.Execute(null);
+                }
             }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+           
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

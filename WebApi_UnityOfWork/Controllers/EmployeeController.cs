@@ -88,5 +88,23 @@ namespace WebApi_UnityOfWork.Controllers
 
             return ResponseMessage(response);
         }
+
+        [HttpDelete]
+        [Route("api/DeleteEmployee/{id}", Name = "DeleteEmployee")]
+        public IHttpActionResult DeleteEmployee(int id)
+        {
+            Employee employeeToRemove = _unitOfWork.Employees.Get(id);
+
+            if (employeeToRemove == null)
+                return NotFound();
+
+            _unitOfWork.Employees.Remove(employeeToRemove);
+            _unitOfWork.Complete();
+
+            var response = new HttpResponseMessage(HttpStatusCode.NoContent);
+
+            return ResponseMessage(response);
+
+        }
     }
 }
